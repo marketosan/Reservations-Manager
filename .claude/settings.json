@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nf=d.get('tool_input',{}).get('file_path','') or d.get('tool_response',{}).get('filePath','')\nif f.endswith('reservations/models.py'):\n    print(json.dumps({'hookSpecificOutput':{'hookEventName':'PostToolUse','additionalContext':'models.py was just changed - check whether docs/schema.md (the Property/Reservation field list and mermaid ERD) needs updating to match, and update it in this same turn if so.'}}))\n\" 2>/dev/null || true",
+            "statusMessage": "Checking if docs/schema.md needs updating"
+          }
+        ]
+      }
+    ]
+  }
+}
