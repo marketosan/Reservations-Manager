@@ -4,7 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-The Django project has been scaffolded: `manage.py`, the `reservations_manager/` project package (settings/urls/wsgi/asgi), and an initial `reservations` app live at the repo root. `reservations` is registered in `INSTALLED_APPS`. No models, views, or URLs have been written yet. This file will be filled in incrementally as the project develops.
+The Django project has been scaffolded: `manage.py`, the `reservations_manager/` project package (settings/urls/wsgi/asgi), and an initial `reservations` app live at the repo root. `reservations` is registered in `INSTALLED_APPS`.
+
+- Models: `Property` (name, address, mandatory unique `ical_url`, created_at) and `Reservation` (FK to Property, `uid` matched against booking.com's iCal `VEVENT` UID to avoid duplicate imports, start/end date, summary, synced_at). Both registered in Django admin. See `docs/schema.md` for the field list and ERD.
+- Auth/URLs: login-gated access is in place. `/login/` and `/logout/` use Django's built-in `LoginView`/`LogoutView` with templates in `reservations/templates/registration/`; `/` is a `home` view (`reservations/views.py`) behind `@login_required`, currently just an empty placeholder page. `LOGIN_URL`/`LOGIN_REDIRECT_URL`/`LOGOUT_REDIRECT_URL` are set in settings. No plain "user" role/permissions have been built yet — only a seeded `admin` superuser exists so far; the admin/user permission split is still TBD (see Project goals).
+- A `PostToolUse` hook in `.claude/settings.json` reminds Claude to keep `docs/schema.md` in sync whenever `reservations/models.py` changes.
+
+This file will be filled in incrementally as the project develops.
 
 ## Project goals
 
