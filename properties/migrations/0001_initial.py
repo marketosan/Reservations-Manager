@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('end_date', models.DateField()),
                 ('summary', models.CharField(blank=True, max_length=255)),
                 ('synced_at', models.DateTimeField(auto_now=True)),
-                ('property', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='reservations.property')),
+                ('property', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='properties.property')),
             ],
             options={
                 'unique_together': {('property', 'uid')},
