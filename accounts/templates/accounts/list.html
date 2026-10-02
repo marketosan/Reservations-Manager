@@ -28,7 +28,11 @@
                     <td class="text-center">{{ user.is_active|yesno:"Yes,No" }}</td>
                     <td class="text-right space-x-2">
                         <a href="{% url 'user_edit' user.pk %}" class="btn btn-sm">Edit</a>
-                        <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-error">Delete</a>
+                        <form method="post" action="{% url 'user_delete' user.pk %}" class="inline"
+                              onsubmit="return confirm('Are you sure you want to delete user: {{ user.username|escapejs }}?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-error">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}

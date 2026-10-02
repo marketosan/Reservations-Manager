@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from .forms import UserCreateForm, UserEditForm
 
@@ -51,11 +52,10 @@ def user_edit(request, pk):
 
 
 @staff_required
+@require_POST
 def user_delete(request, pk):
     user_obj = get_object_or_404(User, pk=pk)
-    if request.method == "POST":
-        if user_obj != request.user:
-            user_obj.delete()
-        return redirect("user_list")
-    return render(request, "accounts/confirm_delete.html", {"user_obj": user_obj})
+    if user_obj != request.user:
+        user_obj.delete()
+    return redirect("user_list")
 
