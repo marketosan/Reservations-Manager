@@ -1,0 +1,39 @@
+{% extends "properties/layout/admin_base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h1 class="text-3xl font-extrabold tracking-tight">Users</h1>
+        </div>
+        <a href="{% url 'user_create' %}" class="btn btn-primary">Add user</a>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="table table-zebra">
+            <thead>
+                <tr>
+                    <th class="text-center">Username</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Admin</th>
+                    <th class="text-center">Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="text-center">{{ user.username }}</td>
+                    <td class="text-center">{{ user.email|default:"-" }}</td>
+                    <td class="text-center">{{ user.is_staff|yesno:"Yes,No" }}</td>
+                    <td class="text-center">{{ user.is_active|yesno:"Yes,No" }}</td>
+                    <td class="text-right space-x-2">
+                        <a href="{% url 'user_edit' user.pk %}" class="btn btn-sm">Edit</a>
+                        <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-error">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

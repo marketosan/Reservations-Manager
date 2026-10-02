@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@source not "./tailwindcss";
+@source not "./daisyui{,*}.mjs";
+@source "../properties/templates";
+@source "../accounts/templates";
+
+@plugin "./daisyui.mjs";
+
+@plugin "./daisyui-theme.mjs" {
+  /* custom theme here */
+}
